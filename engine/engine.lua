@@ -17,14 +17,14 @@ function engine:init()
 
   render:init()
     -- sound:init()
-    -- control:init()
+    control:init()
 end
 
 -- load resources
 function engine:load()
   self.loading = true
   function love.load()
-
+    self.loading = false
   end
 end
 
@@ -35,17 +35,21 @@ function engine:update(func)
   function love.update(dt)
     local data
 
+    -- checking is initia loading
     if self.loading then
       function love.draw()
         love.graphics.print('loading', 400, 300)
       end
       return
     end
-
+    -- getting data from game logic func
     data = func()
+    -- draw the data
     function love.draw()
-      love.graphics.print(data..' '..dt, 400, 300)
+      render:all(data)
     end
+    -- getting input
+    control:update()
   end
 end
 

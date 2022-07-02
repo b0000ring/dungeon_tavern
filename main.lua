@@ -1,3 +1,6 @@
+-- global
+mediator = require('mediator')
+
 local game = require('game/game')
 local engine = require('engine/engine')
 
