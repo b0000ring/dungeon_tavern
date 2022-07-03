@@ -24,6 +24,7 @@ end
 function engine:load()
   self.loading = true
   function love.load()
+    render:load()
     self.loading = false
   end
 end

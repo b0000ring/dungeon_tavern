@@ -1,5 +1,5 @@
-local MAX_ZOOM = 10
-local MIN_ZOOM = -10
+local MAX_ZOOM = 5
+local MIN_ZOOM = 1
 
 local camera = {
   x = 0,
@@ -18,12 +18,13 @@ function camera:move(dir)
 end
 
 function camera:set_zoom(direction)
-  local new_value = self.zoom - direction * 2
-  if new_value > MIN_ZOOM and new_value < MAX_ZOOM then
+  local new_value = self.zoom - direction
+  if new_value >= MIN_ZOOM and new_value <= MAX_ZOOM then
     self.zoom = new_value
   end
 end
 
 mediator:subscribe('control.mouse.drag', 'camera', function(d) camera:move(d) end)
+mediator:subscribe('control.mouse.wheelmoved', 'camera', function(direction) camera:set_zoom(direction) end)
 
 return camera

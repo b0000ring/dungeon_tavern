@@ -5,13 +5,26 @@ local mouse = {
   y = nil
 }
 
+function mouse:init()
+  function love.wheelmoved(x, y) 
+    mouse:wheelmove(y)
+  end
+end
+
 function mouse:drag()
-  print('drag')
   local x = love.mouse.getX()
   local y = love.mouse.getY()
   local dirx = self.x - x
   local diry = self.y - y
   mediator:call('control.mouse.drag', {x = dirx, y = diry})
+end
+
+function mouse:wheelmove(value)
+  local direction = 1
+  if value > 0 then
+    direction = -1
+  end
+  mediator:call('control.mouse.wheelmoved', direction)
 end
 
 function mouse:click()
